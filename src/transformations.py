@@ -6,20 +6,17 @@ import re
 # STEP 1. FILTERING THE DATASET
 ###############################
 
-# Function to filter rows and columns of the DataFrame
+# Function to filter columns of the DataFrame
 def filter(data: pd.DataFrame) -> pd.DataFrame:
     """
-    Filtering DataFrame columns and rows
+    Filtering DataFrame columns
     """
     # Selecting only the columns that we are gonna use
     filtered_cols = data.loc[:, ['Name', 'Age', 'Nationality', 'Overall', 'Potential', 'International Reputation', 'Club', 'Wage', 
                             'Preferred Foot', 'Weak Foot', 'Position', 'Jersey Number', 'Height', 'Weight', 'Joined', 
                             'Contract Valid Until', 'Release Clause']]
-    
-    # Filtering by International reputation (only players with score higher than 1)
-    result = filtered_cols.loc[(filtered_cols['International Reputation'] > 1)]
 
-    return result
+    return filtered_cols
 
 
 
@@ -202,7 +199,7 @@ def missing_treatment(data: pd.DataFrame) -> pd.DataFrame:
     df = data.copy()
 
     # 1. Drop rows with missing values in critical columns
-    df = df.dropna(subset=['Name', 'Overall', 'Potential', 'International Reputation', 'Position'])
+    df = df.dropna(subset=['Name', 'Overall', 'Potential', 'Position'])
 
     # Strings: Categorical replacements
     df['Nationality'] = df['Nationality'].fillna('Unknown')
@@ -214,8 +211,9 @@ def missing_treatment(data: pd.DataFrame) -> pd.DataFrame:
     df['Release Clause'] = df['Release Clause'].fillna(0)
     df['Jersey Number'] = df['Jersey Number'].fillna(0)
     
-    # Weak Foot: Replace with minimum
+    # Weak Foot and International Reputation: Replace with minimum
     df['Weak Foot'] = df['Weak Foot'].fillna(df['Weak Foot'].min())
+    df['International Reputation'] = df['International Reputation'].fillna(df['International Reputation'].min())
     
     # Age, Height and Weight: Replace with mean
     df['Age'] = df['Age'].fillna(round(df['Age'].mean(), 2))
