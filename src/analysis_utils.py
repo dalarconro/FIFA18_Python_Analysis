@@ -5,7 +5,7 @@ def club_filtering(data: pd.DataFrame, min=0, max=100) -> pd.DataFrame:
     """
     Filtering DataFrame by Club Overall using min and max thresholds
     min threshold is inclusive
-    ma threshold is exclusive
+    max threshold is exclusive
     """
     # 1. Calculating club mean
     club_means = data.groupby('Club')['Overall'].transform('mean')
