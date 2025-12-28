@@ -1,0 +1,11 @@
+# Data Manipulation & Excel
+pandas
+numpy
+openpyxl
+
+# Visualization
+matplotlib
+seaborn
+
+# Label Optimization (Elite Lifecycle plot)
+adjust_text
