@@ -94,8 +94,8 @@ Ensure you have **Python 3.8 or superior** installed. It is not mandatory the us
 ### 2. Clone the repository
 Copy the project into your local directory using Git:
 ```bash
-git clone https://github.com/dalarconro/Python_analysis_project.git
-cd Python_analysis_project
+git clone https://github.com/dalarconro/FIFA18_Python_Analysis.git
+cd FIFA18_Python_Analysis
 ```
 
 ### 3. Installation of dependencies
@@ -145,6 +145,6 @@ This comprehensive analysis has moved from raw data processing to high-level str
 ## 👤 Personal Information
 
 * **Name:** Diego Alarcón Rodríguez
-* **Role:** Data Analyst
+* **Role:** Computer Engineer & Data Analyst
 * **LinkedIn:** https://www.linkedin.com/in/diego-alarcon-rodriguez/
 * **Portfolio:** https://github.com/dalarconro
