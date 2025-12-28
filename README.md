@@ -1,167 +1,150 @@
-# Proyecto de Análisis de Datos con Python
+# Strategic Football Analytics: Data-Driven Scouting & Market Intelligence
 
-## 📌 Descripción general
+![Python](https://img.shields.io/badge/Python-3.8+-blue.svg) 
+![Pandas](https://img.shields.io/badge/Pandas-2.0+-orange.svg) 
+![Status](https://img.shields.io/badge/Project-Finished-green.svg)
 
-Este proyecto tiene como objetivo practicar un **flujo completo de análisis de datos** utilizando Python, con un enfoque orientado a un puesto de **Analista de Datos junior**.
-
-El trabajo sigue un proceso típico de analítica y BI:
-
-1. Carga de datos
-2. Exploración inicial
-3. Limpieza y transformación
-4. Análisis y creación de métricas
-5. Visualización básica
-6. Exportación de resultados
-
-El énfasis está en el uso de **Pandas**, buenas prácticas básicas y pensamiento de tipo *pipeline*, no en modelos de machine learning.
+## :clipboard: Executive Summary
+This project provides a comprehensive strategic framework for professional football club management. Utilizing FIFA 18 (videogame) data, we developed a modular pipeline to move from raw data exploration to high-level market consultancy. The project addresses critical challenges in modern recruitment, such as identifying undervalued talent, managing squad aging cycles, and navigating positional inflation.
 
 ---
 
-## 🧰 Tecnologías utilizadas
+## :open_file_folder: Project Structure
+The repository is organized following professional data science standards for modularity and reproducibility:
 
-- Python 3
-- Pandas
-- NumPy
-- Matplotlib / Seaborn
-- Jupyter Notebook
+```text
+├── data/
+│   ├── raw/                # Original FIFA dataset
+│   └── processed/          # Cleaned data (fifa_processed.csv and scouting_results.csv)
+├── notebooks/
+│   ├── 01_exploration.ipynb # Initial data audit & discovery
+│   ├── 02_cleaning.ipynb    # ETL pipeline & data transformations
+│   └── 03_analysis.ipynb    # Strategic insights & visualizations
+├── src/
+│   ├── transformations.py   # Cleaning data functions
+│   └── analysis_utils.py    # Club filtering and quality tiering logic
+├── outputs/
+│   ├── figures/            # Saved PNG visualizations
+│   └── reports/            # Exported Excel or CSV scouting lists
+└── requirements.txt        # Project dependencies
+```
+
 
 ---
 
-## 📁 Estructura del proyecto
 
-Insertar estructura del proyecto
+## :wrench: Technical Methodology
+
+### 1. The ETL Pipeline (`transformations.py`)
+Raw data was transformed into actionable intelligence through a robust cleaning pipeline:
+* **Unit Conversion:** Standardized Imperial units (lbs, ft'in) to Metric (kg, cm).
+* **Currency Normalization:** Developed a Regex-based parser to convert complex string values (e.g., `€10.5M`, `€100K`) into standardized floats for financial modeling.
+* **Positional Grouping:** Consolidated 27 specific FIFA positions into 4 strategic categories: **GK, DEF, MDF, ATT**.
+* **Missing treatment:** Developed a missing values treatment by dropping or filling those values in the best way possible.
+
+### 2. Strategic Quality Tiering (`analysis_utils.py`)
+To ensure meaningful comparisons, we developed a `club_filtering` utility. This allows us to segment the market by **Mean Club Overall Quality**, distinguishing between "Elite," "Mid-Tier," and "Growth" clubs to identify the most efficient investment pockets.
 
 
 ---
 
-## 🧠 Justificación de la estructura
 
-Aunque en proyectos de datos más grandes es habitual separar completamente las fases de ETL en scripts independientes (`extract.py`, `transform.py`, `load.py`), en este caso se ha optado por un **enfoque híbrido**, más adecuado para un proyecto pequeño y de aprendizaje:
+## :chart_with_upwards_trend: Strategic Results & Market Insights
 
-- Los **notebooks** permiten:
-  - Seguir el proceso paso a paso de forma clara.
-  - Facilitar la exploración y comprensión del dataset.
-  - Visualizar resultados de forma inmediata.
+### **The "Attacker Tax" & Positional Scarcity**
+Our economic analysis identified a significant "Attacker Tax". For the same unit of "Overall" quality, attackers command a much higher market value and wage premium compared to defensive players. 
 
-- El módulo `src/transformations.py` contiene:
-  - Funciones reutilizables de limpieza y transformación.
-  - Lógica separada del análisis exploratorio.
-  - Código más cercano a un entorno de producción sin sobre-ingeniería.
+* **Insight:** The Mid-High (65-75) quality tier was identified as the most "rational" market, offering the best balance between performance and acquisition cost before exponential inflation occurs in the Elite bracket.
 
-Este enfoque busca un equilibrio entre **claridad**, **aprendizaje** y **buenas prácticas reales**.
+> ![This visualization highlights the non-linear relationship between player quality and market value across different positions.](./outputs/figures/Market_Analysis-Efficiency_map_cost_per_point.png)
+
+
+### **Club Diagnostics: The Elite Lifecycle**
+By mapping squad maturity against average performance, we identified clubs at risk of imminent asset depreciation. 
+* **Veteran Powerhouses:** Clubs like Juventus and Inter were identified as having squads at the "peak" of their careers (>26-27 years old), requiring urgent renovation strategies.
+* **Consolidated Dynasties:** Real Madrid and Barcelona were highlighted for maintaining elite performance while successfully integrating younger talent (<24.5 years old).
+
+> ![This scatter plot segments European giants into Maturity vs. Performance quadrants.](./outputs/figures/Elite_Lifecycle.png)
+
 
 ---
 
-## 🔍 Flujo de trabajo
 
-### 1️⃣ Exploración (`01_exploration.ipynb`)
-- Carga del dataset original.
-- Inspección de estructura, tipos y valores.
-- Detección de problemas de calidad de datos.
+## :dart: Predictive Validation (Backtesting)
+We validated our 2018 scouting model against 2025 reality to demonstrate its predictive power:
 
-### 2️⃣ Limpieza y transformación (`02_cleaning.ipynb`)
-- Tratamiento de valores nulos y duplicados.
-- Conversión de tipos (fechas, numéricos, categóricos).
-- Uso de funciones definidas en `src/transformations.py`.
+| Player | 2018 Status (Scouted) | 2025 Reality | Result |
+| :--- | :--- | :--- | :--- |
+| **Takefusa Kubo** | 64 Overall / €0.975M Value | 82 Overall / €43.5M Value | **Success: +4,400% Financial ROI** |
+| **Leandro Paredes**| 80 Overall / Free Agent | 80 Overall / €17.5M Value | **Success: Immediate Stability** |
 
-### 3️⃣ Análisis (`03_analysis.ipynb`)
-- Creación de métricas clave mediante `groupby` y agregaciones.
-- Tablas resumen y pivotes.
-- Visualizaciones básicas.
-- Exportación de resultados finales.
+> ![This visualization highlights the results of our predictions within a seven years period.](./outputs/figures/Scouting-Validation.png)
+
 
 ---
 
-## 📊 Resultados
 
-Los resultados del análisis se encuentran en:
-- `outputs/reports/`: tablas finales en formato CSV.
-- `outputs/figures/`: gráficos generados durante el análisis.
+## :rocket: Installation & Usage
+
+Follow this stepts to set up your environment and execute the analysis in your local machine:
+
+### 1. Prerequisites
+Ensure you have **Python 3.8 or superior** installed. It is not mandatory the usage of a virtual environment, but it is recommended to keep dependencies clean.
+
+### 2. Clone the repository
+Copy the project into your local directory using Git:
+```bash
+git clone https://github.com/dalarconro/Python_analysis_project.git
+cd Python_analysis_project
+```
+
+### 3. Installation of dependencies
+Install all necessary libraries (Pandas, Numpy, Matplotlib, Seaborn, etc.) executing the following command in your terminal:
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Project Execution
+To reproduce the results and generate the reports, open and execute the notebooks in the Data Pipeline locic order:
+
+* **notebooks/01_exploration.ipynb:** Initial exploration and FIFA 18 dataset structure discovery.
+
+* **notebooks/02_cleaning.ipynb:** ETL pipeline execution.
+
+* **notebooks/03_analysis.ipynb:** Strategic visualization generation, inflation analysis and scouting final results.
+
+
+### 5. Project Outputs
+After executing the notebooks, you will be able to find the results in the follofing folders:
+
+* **outputs/figures/:** exported graphics (Efficiency map, Elite Lifecycle, etc.).
+
+* **outputs/reports/:** Scouting lists and investment opportunities in CSV or XLSX formats.
+
 
 ---
 
-## 🚀 Posibles mejoras futuras
 
-- Automatizar el pipeline en scripts ejecutables.
-- Añadir validaciones de datos.
-- Conectar el flujo a una base de datos (SQLite / PostgreSQL).
-- Incorporar tests básicos para funciones de transformación.
+## :bulb: Conclusion and Strategic Vision
 
----
+This comprehensive analysis has moved from raw data processing to high-level strategic consultancy. By synthesizing scouting, club diagnostics, and market economics, we have established a robust framework for professional football management:
 
-## 👤 Autor
+1. **Talent Discovery (Scouting):** We proved that data-driven filters can distinguish between "Low-Risk Performance" (like Paredes) and "High-Reward Potential" (like Kubo), allowing a club to balance immediate results with future financial growth.
 
-Proyecto realizado como ejercicio práctico de aprendizaje en análisis de datos con Python.
+2. **Organizational Health (Club Analysis):** By diagnosing "Aging Squads," we identified exactly where clubs are vulnerable to asset depreciation, providing a clear "Rejuvenation Roadmap" for teams at risk.
 
+3. **Market Intelligence (Inflation & Scarcity):** We quantified the "Attacker Tax" and identified the Mid-High (65-75) tier as the most efficient market for acquisition, allowing clubs to bypass the exponential inflation of the elite bracket.
 
+4. **Strategic Backtesting:** The 2025 validation confirms that our 2018 metrics weren't just snapshots—they were predictive indicators of professional success.
 
-## 📋 Executive Scouting Summary & Action Plan
-
-### 1. Methodology Overview
-This analysis processed a global database of over 18,000 players to identify high-yield investment opportunities. By applying a **multi-dimensional scoring system**, we filtered the talent pool based on four critical pillars:
-* **Value Efficiency:** Identifying high potential at a low market cost.
-* **Wage-to-Performance:** Optimizing the salary-to-output ratio.
-* **Growth Margin:** Prioritizing young players with the highest development ceiling.
-* **Negotiation Urgency:** Leveraging favorable contract situations (expiring within 24 months).
-
-### 2. Strategic Insights
-* **The "Value Zone":** The most efficient market segment is found in players with a Release Clause below **€10M**. In this range, the correlation between price and future quality is weakest, offering the highest ROI.
-* **Market Anomalies:** Countries like **Spain and Germany** act as "Premium Markets" where mandatory high release clauses penalize players in efficiency rankings. Conversely, **Italy and France** are currently the top exporters of accessible 'Elite' talent.
-* **Volume vs. Quality:** While **England** leads the market in sheer volume of professional prospects, the density of **Elite-tier talent** is significantly higher in Southern European and specific South American markets.
-
-### 3. Top Investment Recommendations
-Based on the **Final Scouting Score**, the following targets should be prioritized for immediate recruitment:
-1.  **Elite Target:** **T. Kubo** — Represents the most statistically sound 'Elite' investment globally.
-2.  **Strategic Asset:** **A. Bastoni** — High-caliber defensive prospect with an optimized market valuation.
-3.  **High-Efficiency Gem:** **A. Kuruniyan** — Leader of the 'Top Class' tier with exceptional value-for-money metrics.
-
-### 4. Recommended Action Plan
-* **Immediate Action:** Initiate contact with the Top 5 ranked players in the **Elite and Top Class** tiers before their market value escalates due to professional growth.
-* **Resource Allocation:** Direct physical scouting missions to **Italy and France** to monitor the high-density elite clusters identified.
-* **Financial Strategy:** Focus acquisition budgets on undervalued release clauses (under €15M) to maximize the probability of future capital gains.
-
-
-# 5. 📋 Market Inflation: Positional Value & Scarcity Analysis
-
-## Introduction
-To conclude our strategic assessment, we shift our focus to the economic structure of the football market. Recruitment is not only about finding talent but also about understanding where capital is most efficiently deployed. This analysis explores **Positional Inflation**: the phenomenon where certain areas of the pitch command a premium price regardless of player quality. By utilizing our `club_filtering` utility, we segment the global market into competitive tiers (Elite, Top-Tier, and Mid-Market). This allows us to identify 'Scarcity Zones'—positions where talent is exceptionally expensive—and 'Value Pockets'—positions where high-quality reinforcements can be acquired at a fraction of the cost. Understanding these dynamics is the final step in building a sustainable and financially responsible recruitment strategy.
+**Final Insight:** In modern football, the competitive gap is often a financial gap. However, as this project demonstrates, data is the great equalizer. By understanding positional scarcity and identifying quality before the market inflates its price, a club can overperform its budget and build a sustainable, winning dynasty.
 
 ---
 
-## Executive Summary: Positional Market Dynamics
+## 👤 Personal Information
 
-### 1. Market Segmentation & Concentration
-The market is heavily top-heavy, with the **Elite (75+)** tier commanding release clauses nearly **8.5 times higher** than the Mid-High segment. While the **Development (<65)** tier serves as a high-volume talent pool, capital concentration in the Elite tier creates a high-barrier entry for clubs attempting to break into the top competitive bracket.
-
-### 2. The "Attacker Tax" & Scarcity Premium
-Our analysis confirms that goal-scoring talent is the most inflated commodity in football:
-* **Acquisition Inflation:** In the Elite tier, clubs pay **€0.58M per Overall point** for attackers, a **69.13% premium** over defenders.
-* **Maintenance Burden:** The "Status Premium" is evident in wages, where elite attackers earn **1.20K per point**, significantly outstripping the salary growth of goalkeepers and defenders.
-* **Early Speculation:** Surprisingly, the highest acquisition premium relative to quality (**81.37%**) is found in the **Development** tier, indicating that clubs aggressively overprice young attacking prospects based on potential rather than current output.
-
-### 3. Strategic "Value Pockets"
-The **Mid-High (65-75)** tier represents the most rational and efficient segment of the market. With an attacking premium of only **32.03%**—the lowest across all tiers—this segment offers the best opportunity for clubs to upgrade their squads without facing the exponential "superstar tax" of the Elite tier or the speculative volatility of the Development tier.
-
-### 4. Strategic Recommendations
-* **For Buyer Clubs:** Focus investment on the **Mid-High** tier for attacking roles to maximize "Quality per Euro".
-* **For Seller Clubs:** Target the **Elite** market when offloading attackers, as the price-to-quality ratio scales most aggressively in that segment.
-* **Budget Allocation:** Prioritize high-spending for **ATT** and **MDF** roles while seeking "Efficient Stability" in **DEF** and **GK** positions, where quality can be acquired at nearly half the cost per point.
-
----
-
-## Visual Data Analysis
-
-### Absolute Market Heat: Average Release Clause by Tier & Position
-"This first visualization maps the absolute costs across market tiers. It highlights where the largest financial investments are concentrated and confirms the exponential price jump as we move from development leagues to the elite footballing world. It serves as a 'Heat Map' for where the most capital is required to compete."
-
-**Conclusion:** The absolute market value distribution confirms a massive financial 'jump' between tiers. In the **Elite (75+)** segment, attackers (ATT) command an average release clause of **€44.7M**, which is more than **8.5 times** the cost of an attacker in the **Mid-High (65-75)** tier (€5.2M). This highlights that while the Mid-High market is relatively accessible, competing for elite talent requires an exponential increase in capital.
-
-### The Efficiency Map: Cost per Quality Point (M EUR)
-"Beyond absolute prices, we need to understand value. This chart displays the 'Acquisition Cost per Overall Point', revealing how much a club pays for each unit of performance. This is the definitive tool for identifying 'Positional Inflation'—showing exactly where the market is overpaying for quality and where the most efficient impact signings are hidden."
-
-**Conclusion:** This chart reveals the true 'Positional Inflation' by neutralizing the player's quality (Overall). It illustrates that in the **Elite** tier, a club pays **€0.58M per point of Overall** for an attacker, nearly **double** what they pay for a goalkeeper (€0.29M). Interestingly, the **Development (<65)** tier also shows a significant efficiency gap, suggesting that the market aggressively overprices goal-scoring potential even at lower levels.
-
-### The Status Premium: Wage Cost per Quality Point (K EUR)
-"Finally, we analyze the 'Wage Cost per Overall Point'. This provides a view of the recurring financial burden (salaries) relative to player quality. It helps identify if certain positions command a higher 'Status Premium' in their weekly paychecks compared to their defensive counterparts, which is critical for long-term financial sustainability."
-
-**Conclusion:** The wage analysis demonstrates that elite attackers do not just cost more to buy; they are significantly more expensive to maintain. In the **Elite** tier, attackers earn **1.20K per point of Overall**, a 'Status Premium' that sits **41% higher** than defenders (0.85K). For a club's long-term sustainability, the most significant 'wage bill' risk lies in the attacking frontline.
+* **Name:** Diego Alarcón Rodríguez
+* **Role:** Data Analyst
+* **LinkedIn:** https://www.linkedin.com/in/diego-alarcon-rodriguez/
+* **Portfolio:** https://github.com/dalarconro

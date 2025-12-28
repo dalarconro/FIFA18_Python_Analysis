@@ -8,4 +8,4 @@ matplotlib
 seaborn
 
 # Label Optimization (Elite Lifecycle plot)
-adjust_text
+adjustText
