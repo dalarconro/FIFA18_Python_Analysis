@@ -12,7 +12,7 @@ def filter(data: pd.DataFrame) -> pd.DataFrame:
     Filtering DataFrame columns
     """
     # Selecting only the columns that we are gonna use
-    filtered_cols = data.loc[:, ['Name', 'Age', 'Nationality', 'Overall', 'Potential', 'International Reputation', 'Club', 'Wage', 
+    filtered_cols = data.loc[:, ['Name', 'Age', 'Nationality', 'Overall', 'Potential', 'Value', 'International Reputation', 'Club', 'Wage', 
                             'Preferred Foot', 'Weak Foot', 'Position', 'Jersey Number', 'Height', 'Weight', 'Joined', 
                             'Contract Valid Until', 'Release Clause']]
 
@@ -172,7 +172,7 @@ def data_adjustment(data: pd.DataFrame) -> pd.DataFrame:
         df['Height'] = df['Height'].apply(convert_height_to_cm)
 
     # Apply convertion to currency columns
-    currency_cols = ['Wage', 'Release Clause']
+    currency_cols = ['Value', 'Wage', 'Release Clause']
     for col in currency_cols:
         # Check currency cols: only transform if it's still an 'object' (string)
         if df[col].dtype == 'object':
@@ -207,6 +207,7 @@ def missing_treatment(data: pd.DataFrame) -> pd.DataFrame:
     df['Preferred Foot'] = df['Preferred Foot'].fillna('Right')
     
     # Financials & Numbers
+    df['Value'] = df['Value'].fillna(0)
     df['Wage'] = df['Wage'].fillna(0)
     df['Release Clause'] = df['Release Clause'].fillna(0)
     df['Jersey Number'] = df['Jersey Number'].fillna(0)
@@ -262,15 +263,18 @@ def scale_rename(data: pd.DataFrame) -> pd.DataFrame:
     # We do this here to keep the transformations.py logic simple and standard
     if 'Wage' in data.columns:
         data['Wage'] = data['Wage'] / 1_000
+    if 'Value' in data.columns:
+        data['Value'] = data['Value'] / 1_000_000
     if 'Release Clause' in data.columns:
         data['Release Clause'] = data['Release Clause'] / 1_000_000
 
     # 2. Renaming for clarity in Analysis
     rename_dict = {
         'Wage': 'Wage (K_EUR)',
+        'Value': 'Value (M_EUR)',
         'Release Clause': 'Release Clause (M_EUR)',
-        'Height': 'Height_cm',
-        'Weight': 'Weight_kg'
+        'Height': 'Height (cm)',
+        'Weight': 'Weight (kg)'
     }
 
     data_final = data.rename(columns=rename_dict)
